@@ -4,11 +4,11 @@ import {UserForm} from "./views/UserForm";
 
 const user = new User({id: 2});
 
-user.on('change', () => {
+user.on('save', () => {
     console.log(user);
 });
 
-user.fetch();
+user.save();
 
 const userForm = new UserForm(
     document.getElementById('root'),

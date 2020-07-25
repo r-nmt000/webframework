@@ -49,6 +49,16 @@ export class User {
         })
     }
 
+    save(): void {
+        this.sync.save(this.attributes.getAll())
+            .then(response => {
+                this.trigger('save');
+            })
+            .catch(() => {
+                this.trigger('error');
+            });
+    }
+
     setRandomAge(): void {
         const age = Math.round(Math.random() * 100);
         this.attributes.set({age: age});
