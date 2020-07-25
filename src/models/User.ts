@@ -1,39 +1,39 @@
-import axios, { AxiosResponse } from "axios";
+import {Eventing} from "./Eventing";
+import {Sync} from "./Sync";
+import {Attributes} from "./Attributes";
 
-interface UserProps {
+export interface UserProps {
     id?: number;
     name?: string;
     age?: number;
 }
 
+const rootUrl = 'http://localhsot:3000/users';
 
 export class User {
+    public events = new Eventing();
+    public sync: Sync<UserProps> = new Sync<UserProps>("");
+    public attributes: Attributes<UserProps>;
 
-    constructor(private data: UserProps) {}
-
-    get(propName: string): (number | string) {
-        return this.data[propName];
+    constructor(attrs: UserProps) {
+        this.attributes = new Attributes<UserProps>(attrs);
     }
 
-    set(update: UserProps): void {
-        Object.assign(this.data, update);
+    get on() {
+        return this.events.on;
+    }
+
+    get trigger() {
+        return this.events.trigger;
+    }
+
+    get get() {
+        return this.attributes.get;
     }
 
 
-    fetch(): void {
-        axios.get(`http://localhost:3000/users/${this.get('id')}`)
-            .then((response: AxiosResponse):void => {
-                this.set(response.data);
-            })
-    }
-
-    save(): void {
-        const id = this.get('id');
-        if (id) {
-            axios.put(`http://localhost:3000/users/${id}`, this.data);
-        } else {
-            axios.post(`http://localhost:3000/users/${id}`, this.data);
-        }
-
+    setRandomAge(): void {
+        const age = Math.round(Math.random() * 100);
+        this.attributes.set({age: age});
     }
 }
