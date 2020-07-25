@@ -2,7 +2,7 @@ import { User } from "./models/User";
 import axios from "axios";
 import {UserForm} from "./views/UserForm";
 
-const user = new User({id: 2});
+const user = User.build({id: 1});
 
 user.on('save', () => {
     console.log(user);
