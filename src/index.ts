@@ -1,4 +1,4 @@
-import { User } from "./models/User";
+import {User, UserProps} from "./models/User";
 import axios from "axios";
 import {UserForm} from "./views/UserForm";
 import {Collection} from "./models/Collection";
@@ -11,7 +11,7 @@ import {Collection} from "./models/Collection";
 //
 // user.save();
 
-const collection = new Collection('http://localhost:3000/users');
+const collection = User.buildUserCollection();
 
 collection.on('change', () => {
     console.log(collection);
