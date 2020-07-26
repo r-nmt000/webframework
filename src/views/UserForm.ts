@@ -1,20 +1,6 @@
-import {User} from "../models/User";
+import {View} from "./View";
 
-export class UserForm {
-    parent: Element;
-    model: User;
-
-    constructor(parent: Element, model: User) {
-        this.parent = parent;
-        this.model = model;
-
-        this.bindModel();
-    }
-    bindModel(): void {
-        this.model.on('change', () => {
-            this.render();
-        })
-    }
+export class UserForm extends View {
 
     eventsMap(): {[key:string]: () => void } {
         return {
@@ -35,18 +21,6 @@ export class UserForm {
         }
     };
 
-    bindEvents(fragment: DocumentFragment): void {
-        const eventsMap = this.eventsMap();
-
-        for (let eventKey in eventsMap) {
-            const [eventName, selector] = eventKey.split(':');
-            fragment.querySelectorAll(selector).forEach(element => {
-                element.addEventListener(eventName, eventsMap[eventKey]);
-            })
-        }
-
-    }
-
     template(): string {
         return `
           <div>
@@ -60,13 +34,4 @@ export class UserForm {
         `;
     }
 
-    render(): void {
-        this.parent.innerHTML = '';
-
-        const templateElement = document.createElement('template');
-        templateElement.innerHTML = this.template();
-
-        this.bindEvents(templateElement.content);
-        this.parent.append(templateElement.content);
-    }
 }
