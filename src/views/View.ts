@@ -1,7 +1,11 @@
-import {User} from "../models/User";
+import {Model} from "../models/Model";
 
-export abstract class View {
-    constructor(protected parent: Element, protected model: User) {
+interface ModelForView {
+    on(eventName: string, callback: () => void): void;
+}
+
+export abstract class View<T extends Model<K>, K> {
+    constructor(protected parent: Element, protected model: T) {
         this.bindModel();
     }
 

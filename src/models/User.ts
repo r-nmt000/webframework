@@ -14,7 +14,8 @@ const rootUrl = 'http://localhost:3000/users';
 
 export class User extends Model<UserProps> {
     setRandomAge = () => {
-
+        const age = Math.floor(Math.random() * 100);
+        this.set({ age });
     };
 
 
