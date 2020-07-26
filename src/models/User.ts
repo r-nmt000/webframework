@@ -13,6 +13,11 @@ export interface UserProps {
 const rootUrl = 'http://localhost:3000/users';
 
 export class User extends Model<UserProps> {
+    setRandomAge = () => {
+
+    };
+
+
     static build(attrs: UserProps): User {
         return new User(
             new Attributes<UserProps>(attrs),
